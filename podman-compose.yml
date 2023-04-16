@@ -1,0 +1,27 @@
+x-base_service: &base_service
+    volumes:
+      - &v1 ./data:/data:z
+      - &v2 ./output:/output:z
+    runtime: nvidia
+    security_opt:
+      - label=type:nvidia_container_t
+
+services:
+  download:
+    volumes:
+      - *v1
+
+  auto: &automatic
+    <<: *base_service
+
+  auto-cpu:
+    <<: *automatic
+
+  invoke:
+    <<: *base_service
+
+  sygil: &sygil
+    <<: *base_service
+
+  sygil-sl:
+    <<: *sygil
